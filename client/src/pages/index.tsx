@@ -6,7 +6,7 @@ import { DefaultLayout } from '@components/layouts'
 
 const HomePage: NextPage = () => {
 
-	const { data } = trpc.helloWorld.helloWorldWithParams.useQuery({ name: 'everyone' })
+	const { data } = trpc.helloWorld.helloWorldWithParams.useQuery({ name: 'ta mère la pute' })
 
 	return (<>
 
