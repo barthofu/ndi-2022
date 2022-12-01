@@ -50,19 +50,35 @@ namespace Strapi {
 
     type Correspondance = {
 
-        'homepage': Homepage
+        'story': Story
+        'page': Page
+        'option': Option
     }
 
     // COLLECTION TYPES
 
-
-    // SINGLE TYPES
-    
-    type Homepage = {
-        title: string
+    type Option = {
         text: string
+        positive: number
+        redirect: Page
     }
 
+    type Page = {
+        number: number
+        text: string
+        options: Option[]
+        story: Story
+    }
+
+    type Story = {
+        name: string
+        pages: Page[]
+    }
+
+
+    // SINGLE TYPES
+
+    
     // COMPONENTS
     
 }
