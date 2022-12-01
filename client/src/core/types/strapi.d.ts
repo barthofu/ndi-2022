@@ -71,7 +71,7 @@ namespace Strapi {
     }
 
     type Story = {
-        name: string
+        number: number
         pages: Page[]
     }
 
