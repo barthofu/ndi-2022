@@ -4,7 +4,8 @@
   "info": {
     "singularName": "option",
     "pluralName": "options",
-    "displayName": "Option"
+    "displayName": "Option",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -13,17 +14,16 @@
   "attributes": {
     "text": {
       "type": "text",
-      "required": true
+      "required": true,
+      "unique": false
     },
     "positive": {
       "type": "boolean",
       "required": true
     },
     "redirect": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::page.page",
-      "inversedBy": "options"
+      "type": "integer",
+      "required": true
     }
   }
 }

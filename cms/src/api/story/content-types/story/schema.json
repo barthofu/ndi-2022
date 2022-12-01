@@ -4,22 +4,24 @@
   "info": {
     "singularName": "story",
     "pluralName": "stories",
-    "displayName": "Story"
+    "displayName": "Story",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
     "pages": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::page.page",
       "mappedBy": "story"
+    },
+    "number": {
+      "type": "integer",
+      "required": true,
+      "unique": true
     }
   }
 }

@@ -21,12 +21,6 @@
       "type": "text",
       "required": true
     },
-    "options": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::option.option",
-      "mappedBy": "redirect"
-    },
     "story": {
       "type": "relation",
       "relation": "manyToOne",
