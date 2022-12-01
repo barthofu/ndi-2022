@@ -50,9 +50,9 @@ namespace Strapi {
 
     type Correspondance = {
 
-        'story': Story
-        'page': Page
-        'option': Option
+        'stories': Story
+        'pages': Page
+        'options': Option
     }
 
     // COLLECTION TYPES
@@ -60,7 +60,7 @@ namespace Strapi {
     type Option = {
         text: string
         positive: number
-        redirect: Page
+        redirect: number
     }
 
     type Page = {
