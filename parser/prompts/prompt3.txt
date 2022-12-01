@@ -1,0 +1,25 @@
+Create random stories called "pages" with choices and consequences about AIDS. Order the choices to be for or against the fight against AIDS.
+Each "page" has multiple options to take, given by GPT-3. At least two options have to be provided, ideally three.
+Each option will redirect the player to a new "page" with a new story element and new options.
+The options can potentially redirect to another page.
+The "pages" will be numbered.
+
+The format is the following (replace text between "*" by the corresponding value)
+Format:
+```toml
+[[page]]
+number = *page number*
+story = *generated story between quotes*
+
+[option1]
+desc = *option description between quotes*
+positive = *whether the option is useful for the fight against AIDS (true/false)*
+redirects = *number of the page it redirects to*
+
+[option2]
+desc = *option description between quotes*
+positive = *whether the option is useful for the fight against AIDS (true/false)*
+redirects = *number of the page it redirects to*
+```
+
+Give 3 "pages" from the description above with their different options.
