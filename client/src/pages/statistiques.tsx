@@ -3,7 +3,7 @@ import { Text, Box, Flex, Center } from '@chakra-ui/react'
 import { DefaultLayout } from '@components/layouts'
 import React, { useMemo } from 'react'
 import { trpc } from '../core/utils/lib'
-import { LineChart, XAxis, YAxis, CartesianGrid, Line, ResponsiveContainer, Bar, BarChart, Legend, Tooltip } from 'recharts';
+import { LineChart, XAxis, YAxis, CartesianGrid, Line, Bar, BarChart, Legend, Tooltip } from 'recharts';
 import dynamic from 'next/dynamic'
 
 const StatsPage: NextPage = () => {

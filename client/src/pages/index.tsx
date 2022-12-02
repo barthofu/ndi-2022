@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import { Button, Center, Grid, GridItem, Text, Flex, Spacer, Box, Circle, SimpleGrid } from '@chakra-ui/react'
 import { DefaultLayout } from '@components/layouts'
 import { FaChild } from 'react-icons/fa'
-import { GoLocation } from 'react-icons/go'
+import { BsGenderMale } from 'react-icons/bs'
 import AnalysisRecapItem from '@components/shared/AnalysisRecapItem'
 import Link from 'next/link'
 import { useStorage } from '@core/hooks'
@@ -65,9 +65,9 @@ const HomePage: NextPage = () => {
 					</picture>
 				</Center>
 				<Box w={{base: "100vw", md: "100%"}} paddingTop={{base: "120px", md: "50px"}} paddingBottom="50px">
-					<AnalysisRecapItem title="18 ans" subtitle="l'âge le plus (prévenu)" icon={FaChild}/>
+					<AnalysisRecapItem title="60 ans" subtitle="l'âge le plus informé" icon={FaChild}/>
 					<Box h="20px"/>
-					<AnalysisRecapItem title="Lyon" subtitle="ville la plus (prévenu)" icon={GoLocation}/>
+					<AnalysisRecapItem title="Homme" subtitle="genre le plus informé" icon={BsGenderMale}/>
 					<Box h="10px"/>
 					<Text fontSize={"12px"}><Link href={'/statistiques'}>Voir plus de statistiques...</Link></Text>
 				</Box>
