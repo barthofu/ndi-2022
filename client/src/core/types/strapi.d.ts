@@ -53,6 +53,7 @@ namespace Strapi {
         'stories': Story
         'pages': Page
         'options': Option
+        'stats': Stat
     }
 
     // COLLECTION TYPES
@@ -74,6 +75,12 @@ namespace Strapi {
     type Story = {
         number: number
         pages: Page[]
+    }
+
+    type Stat = {
+        genre: "Homme" | "Femme" | "Autre"
+        age: Number
+        score: Number
     }
 
 
