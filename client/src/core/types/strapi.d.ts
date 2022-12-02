@@ -61,6 +61,7 @@ namespace Strapi {
         text: string
         options: Option[]
         story: Story
+        image: Image
     }
 
     type Story = {

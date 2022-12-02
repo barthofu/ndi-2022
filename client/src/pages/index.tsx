@@ -1,14 +1,13 @@
-import { trpc } from '@lib/trpc'
 import type { NextPage } from 'next'
 
-import { Button, Center, Grid, GridItem, Text, Flex, Spacer, Box, Circle, SimpleGrid } from '@chakra-ui/react'
+import { Box, Center, Circle, Flex, SimpleGrid, Text } from '@chakra-ui/react'
 import { DefaultLayout } from '@components/layouts'
+import AnalysisRecapItem from '@components/shared/AnalysisRecapItem'
+import { useStorage } from '@core/hooks'
+import Link from 'next/link'
+import { useEffect } from 'react'
 import { FaChild } from 'react-icons/fa'
 import { GoLocation } from 'react-icons/go'
-import AnalysisRecapItem from '@components/shared/AnalysisRecapItem'
-import Link from 'next/link'
-import { useStorage } from '@core/hooks'
-import { useEffect } from 'react'
 
 const HomePage: NextPage = () => {
 
@@ -27,6 +26,7 @@ const HomePage: NextPage = () => {
 				columns={{base: 2, md: 3}}
 				maxW='1300px'
 				padding={"20px"}
+				paddingBottom='40px !important'
 				paddingTop={{base: '5px', md: '20px'}}
 				spacing='10px'
 				height="90vh"
@@ -48,8 +48,8 @@ const HomePage: NextPage = () => {
 							<Link href="/1">
 								<Circle size='120px' bg='#ffb0af' color='white' style={{"cursor": "pointer"}}>
 									<Flex direction={"column"}>
-										<Text marginLeft={"45%"} color='black' fontSize={"25px"} w="200px" fontWeight={500}>{"Suis-je prêt"}</Text>
-										<Text marginLeft={"45%"} color='black' fontSize={"25px"} w="200px" fontWeight={500}>{"à l'éviter ?"}</Text>
+										<Text marginLeft={"45%"} color='black' fontWeight='bolder' color='blue' textDecoration={'underline'} fontSize={"25px"} w="200px" fontWeight={500}>{"Suis-je prêt"}</Text>
+										<Text marginLeft={"45%"} color='black' fontWeight='bolder' color='blue' textDecoration={'underline'} fontSize={"25px"} w="200px" fontWeight={500}>{"à l'éviter ?"}</Text>
 									</Flex>
 								</Circle>
 							</Link>
@@ -61,7 +61,7 @@ const HomePage: NextPage = () => {
 							srcSet={"/assets/condom.webp"}
 							type="image/webp"
 						/>
-						<img src="/assets/condom.png" alt="condom" style={{ width: "100%" }}/>
+						<img src="/assets/condom.png" alt="condom" style={{ width: "80%" }}/>
 					</picture>
 				</Center>
 				<Box w={{base: "100vw", md: "100%"}} paddingTop={{base: "120px", md: "50px"}} paddingBottom="50px">
