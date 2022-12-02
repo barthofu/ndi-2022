@@ -30,17 +30,17 @@ An array of this object:
 
 ```json
 {
-    number: *page number*,
-    story: *generated story between quotes*,
-    option1: {
-        desc: *option description between quotes*,
-        positive: *whether the option is useful for the fight against AIDS (true/false)*,
-        redirects: *number of the page it redirects to*,
+    "number": "*page number*",
+    "story": "*generated story between quotes*",
+    "option1": {
+        "desc": "*option description between quotes*",
+        "positive": "*whether the option is useful for the fight against AIDS (true/false)*",
+        "redirects": "*number of the page it redirects to*"
     },
-    option12 {
-        desc: *option description between quotes*,
-        positive: *whether the option is useful for the fight against AIDS (true/false)*,
-        redirects: *number of the page it redirects to*
+    "option2" {
+        "desc": "*option description between quotes*",
+        "positive": "*whether the option is useful for the fight against AIDS (true/false)*",
+        "redirects": "*number of the page it redirects to*"
     }
 }
 ```
