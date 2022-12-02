@@ -23,14 +23,16 @@ const StatsPage: NextPage = () => {
 		return data ? [{genre: "Homme", score: averageMen}, {genre: "Femme", score: averageWomen}, {genre: "Autre", score: averageOther}] : [];
 	}, [data]);
 
+	const sortDataByAge = useMemo(() => data?.sort((a, b) => a.age - b.age), [data]); 
+
 	const Charts = dynamic(() => Promise.resolve(() => <>
-	<LineChart width={500} height={300} data={data}>
-			<XAxis dataKey="score"/>
+	<LineChart width={500} height={300} data={sortDataByAge}>
+			<XAxis dataKey="age"/>
 			<YAxis/>
 			<CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
 			<Tooltip />
   		<Legend verticalAlign="top" height={36}/>
-			<Line name="Score par âge" type="monotone" dataKey="age" stroke="#82ca9d" />
+			<Line name="Score par âge" type="monotone" dataKey="score" stroke="#82ca9d" />
 		</LineChart>
 		<Box width={"50px"} />
 		<BarChart width={500} height={500} data={genreMappedData}>
@@ -58,13 +60,15 @@ const StatsPage: NextPage = () => {
 				marginLeft="auto">
 				<Box w="300px" paddingTop="90px">
 						<Box w='80%'>
-							<picture style={{ objectFit: 'cover' }}>
-								<source
-									srcSet={"/assets/logo.webp"}
-									type="image/webp"
-								/>
-								<img src="/assets/logo.png" alt="logo" />
-							</picture>
+							<a href="/">
+								<picture style={{ objectFit: 'cover' }}>
+									<source
+										srcSet={"/assets/logo.webp"}
+										type="image/webp"
+									/>
+									<img src="/assets/logo.png" alt="logo" />
+								</picture>
+							</a>
 						</Box>
 						<Text fontSize={15} fontWeight="600" paddingTop={"10px"}>Statistiques</Text>
 				</Box>
