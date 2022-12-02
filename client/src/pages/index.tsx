@@ -23,7 +23,6 @@ const HomePage: NextPage = () => {
 		<DefaultLayout
 			title='Evite le VIH'
 		>
-
 			<SimpleGrid 
 				columns={{base: 2, md: 3}}
 				maxW='1300px'
@@ -44,6 +43,7 @@ const HomePage: NextPage = () => {
 							</picture>
 						</Box>
 						<Text fontSize={15} fontWeight="600" paddingTop={"30px"}>Afin de sensibiliser les personnes à la question du VIH/sida, EVITE LE VIH lance une étude statistique de prévention. Jouez pour en savoir plus.</Text>
+						<Text fontSize={12} fontWeight="300" paddingTop={"5px"}>*jeu généré par IA</Text>
 						<Box marginTop={"180px"}>
 							<Link href="/1">
 								<Circle size='120px' bg='#ffb0af' color='white' style={{"cursor": "pointer"}}>
