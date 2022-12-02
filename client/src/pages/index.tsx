@@ -36,14 +36,14 @@ const HomePage: NextPage = () => {
 						</Box>
 						<Text fontSize={15} fontWeight="600" paddingTop={"30px"}>Afin de sensibiliser les personnes à la question du VIH/sida, EVITE LE VIH lance une étude statistique de prévention. Jouez pour en savoir plus.</Text>
 						<Box marginTop={"180px"}>
-							<Button variant={'unstyled'}>
-								<Circle size='120px' bg='#ffb0af' color='white'>
+							<Link href="/1">
+								<Circle size='120px' bg='#ffb0af' color='white' style={{"cursor": "pointer"}}>
 									<Flex direction={"column"}>
-										<Text marginLeft={"45%"} color='black' fontSize={"25px"}>{"Suis-je prêt"}</Text>
-										<Text marginLeft={"45%"} color='black' fontSize={"25px"}>{"à l'éviter ?"}</Text>
+										<Text marginLeft={"45%"} color='black' fontSize={"25px"} w="200px" fontWeight={500}>{"Suis-je prêt"}</Text>
+										<Text marginLeft={"45%"} color='black' fontSize={"25px"} w="200px" fontWeight={500}>{"à l'éviter ?"}</Text>
 									</Flex>
 								</Circle>
-							</Button>
+							</Link>
 						</Box>
 				</Box>
 				<Center h="100%">
@@ -60,9 +60,8 @@ const HomePage: NextPage = () => {
 					<Box h="20px"/>
 					<AnalysisRecapItem title="Lyon" subtitle="ville la plus (prévenu)" icon={GoLocation}/>
 					<Box h="10px"/>
-					<Text  fontSize={"12px"}><Link href={'#'}>Voir plus de statistiques...</Link></Text>
+					<Text fontSize={"12px"}><Link href={'/statistiques'}>Voir plus de statistiques...</Link></Text>
 				</Box>
-				
 			</SimpleGrid>
 		</DefaultLayout>
 	</>)

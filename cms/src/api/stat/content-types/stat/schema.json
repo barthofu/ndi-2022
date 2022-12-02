@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stats",
+  "info": {
+    "singularName": "stat",
+    "pluralName": "stats",
+    "displayName": "Stat",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "genre": {
+      "type": "enumeration",
+      "enum": [
+        "Homme",
+        "Femme",
+        "Autre"
+      ]
+    },
+    "score": {
+      "type": "integer"
+    },
+    "age": {
+      "type": "integer"
+    }
+  }
+}
