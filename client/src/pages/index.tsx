@@ -23,10 +23,7 @@ const HomePage: NextPage = () => {
 		<DefaultLayout
 			title='Evite le VIH'
 		>
-			<Button 
-				as='a'
-				href='/1'
-			/>
+
 			<SimpleGrid 
 				columns={{base: 2, md: 3}}
 				maxW='1300px'

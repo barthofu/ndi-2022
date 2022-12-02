@@ -1,1 +1,3 @@
-type GeneralConfigType = {}
+type GeneralConfigType = {
+    scoreOffset: number
+}
