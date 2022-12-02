@@ -78,8 +78,8 @@ namespace Strapi {
 
     type Stat = {
         genre: "Homme" | "Femme" | "Autre"
-        age: Number
-        score: Number
+        age: number
+        score: number
     }
 
 
