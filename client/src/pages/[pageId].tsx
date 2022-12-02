@@ -1,22 +1,26 @@
-import { ScoreContext } from '@core/state'
 import { trpc } from '@utils/lib'
-import { useAtom } from 'jotai'
 import type { NextPage } from 'next'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
-import { Box, Button } from '@chakra-ui/react'
+import { Box, Flex, Spinner } from '@chakra-ui/react'
 import { DefaultLayout } from '@components/layouts'
-import { useContext, useEffect } from 'react'
-import Link from 'next/link'
-import { useStorage } from '@core/hooks'
 import { Page } from '@components/modules'
+
+const PageComponent = dynamic(() => Promise.resolve(Page), {
+	ssr: false
+})
 
 const PagePage: NextPage<any> = ({ setScore }) => {
 
 	const router = useRouter()
+	const pageId = router.query.pageId as string
+	if (pageId === '-1' && typeof window !== 'undefined') {
+		router.push('/envoi')
+	}
 
 	const { data, error } = trpc.story.getStory.useQuery({
-		pageId: parseInt(router.query.pageId as string),
+		pageId: parseInt(pageId),
 	})
 
 	return (<>
@@ -26,10 +30,10 @@ const PagePage: NextPage<any> = ({ setScore }) => {
 		>
 
 			{error && <Box>{error.message}</Box>}
-			{!data && !error && <Box>Loading...</Box>}
+			{!data && !error && <Flex w='100vw' h='100vh' alignItems='center' justifyContent='center'><Spinner /></Flex>}
 			{data && <>
 				
-				<Page page={data}/>
+				<PageComponent page={data}/>
 
 			</>}
 

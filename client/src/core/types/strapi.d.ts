@@ -52,18 +52,10 @@ namespace Strapi {
 
         'stories': Story
         'pages': Page
-        'options': Option
         'stats': Stat
     }
 
     // COLLECTION TYPES
-
-    type Option = {
-        text: string
-        positive: boolean
-        redirect: number
-        page: Page
-    }
 
     type Page = {
         text: string
@@ -88,4 +80,11 @@ namespace Strapi {
     
     // COMPONENTS
     
+    type Option = {
+        text: string
+        positive: boolean
+        redirect: number
+        page: Page
+    }
+
 }
