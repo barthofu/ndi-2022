@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_main_options",
+  "info": {
+    "displayName": "option",
+    "icon": "braille"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "text",
+      "required": true
+    },
+    "positive": {
+      "type": "boolean",
+      "required": true
+    },
+    "redirect": {
+      "type": "integer",
+      "required": true
+    }
+  }
+}

@@ -24,12 +24,6 @@
     "redirect": {
       "type": "integer",
       "required": true
-    },
-    "page": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::page.page",
-      "inversedBy": "options"
     }
   }
 }

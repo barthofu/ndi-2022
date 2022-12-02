@@ -28,10 +28,10 @@
       "inversedBy": "pages"
     },
     "options": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::option.option",
-      "mappedBy": "page"
+      "type": "component",
+      "repeatable": true,
+      "component": "main.option",
+      "required": true
     }
   }
 }
