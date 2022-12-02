@@ -59,8 +59,9 @@ namespace Strapi {
 
     type Option = {
         text: string
-        positive: number
+        positive: boolean
         redirect: number
+        page: Page
     }
 
     type Page = {
