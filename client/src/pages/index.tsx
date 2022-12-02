@@ -5,16 +5,28 @@ import { Button, Center, Grid, GridItem, Text, Flex, Spacer, Box, Circle, Simple
 import { DefaultLayout } from '@components/layouts'
 import { FaChild } from 'react-icons/fa'
 import { GoLocation } from 'react-icons/go'
-import AnalysisRecapItem from '../components/shared/AnalysisRecapItem'
+import AnalysisRecapItem from '@components/shared/AnalysisRecapItem'
 import Link from 'next/link'
+import { useStorage } from '@core/hooks'
+import { useEffect } from 'react'
 
 const HomePage: NextPage = () => {
+
+	const { setItem } = useStorage()
+
+	useEffect(() => {
+		setItem('score', '50')
+	}, [])
 
 	return (<>
 
 		<DefaultLayout
 			title='Evite le VIH'
 		>
+			<Button 
+				as='a'
+				href='/1'
+			/>
 			<SimpleGrid 
 				columns={{base: 2, md: 3}}
 				maxW='1300px'

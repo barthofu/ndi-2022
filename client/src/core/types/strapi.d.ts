@@ -66,7 +66,6 @@ namespace Strapi {
     }
 
     type Page = {
-        number: number
         text: string
         options: Option[]
         story: Story

@@ -1,3 +1,3 @@
-import { atom } from 'jotai'
+import { createContext } from 'react'
 
-export const score = atom(50) // starts at 50%
+export const ScoreContext = createContext(50)
