@@ -60,7 +60,7 @@ namespace Strapi {
     type Option = {
         text: string
         positive: boolean
-        redirect: number
+        redirect: numbera
         page: Page
     }
 

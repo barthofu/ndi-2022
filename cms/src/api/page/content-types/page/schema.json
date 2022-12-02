@@ -26,6 +26,12 @@
       "relation": "manyToOne",
       "target": "api::story.story",
       "inversedBy": "pages"
+    },
+    "options": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::option.option",
+      "mappedBy": "page"
     }
   }
 }
