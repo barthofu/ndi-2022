@@ -6,6 +6,7 @@ import { hideBin } from 'yargs/helpers';
 import { resolve } from 'path';
 import { Agent } from 'http';
 import { Agent as SAgent } from 'https';
+import ora from 'ora';
 
 config(); // import environment variables
 
@@ -17,7 +18,7 @@ yargs(hideBin(process.argv))
       yargs.positional('file', {
         type: 'string',
         describe: 'the file to upload',
-      });
+      })
     },
     (argv) => {
       if (argv.file != undefined) {
@@ -165,25 +166,35 @@ type Page = {
 }
 
 function parse (uri: string): Page[] {
-  return require(uri) as Page[];
+  const spinner = ora('Parsing file').start();
 
-  // let file: string;
-  // try {
-  //   file = readFileSync(resolve(uri), 'utf-8');
-  // } catch {
-  //   throw new Error('Error reading the file, see README.md for more information.');
-  // }
+  const pages = require(uri) as Page[];
 
-  // try {
-  //   return toml.parse(file) as Page[];
-  // } catch {
-  //   throw new Error('Error parsing the file, see README.md for more information.');
-  // }
+  let allPagesIds: number[] = [];
+
+  for (let page of pages) {
+    allPagesIds.push(page.number);
+  }
+
+  let newPages = [];
+
+  // remove option1 or option2 if it redirects to a page that doesn't exist
+  for (let page of pages) {
+    if (!allPagesIds.includes(page.option1.redirects)) {
+      page.option1.redirects = -1;
+    }
+    if (!allPagesIds.includes(page.option2.redirects)) {
+      page.option2.redirects = -1;
+    }
+    newPages.push(page);
+  }
+
+  spinner.succeed('File parsed');
+
+  return newPages;
 }
 
 async function upload(data: Page[]) {
-  console.log('started to upload');
-
   const axios = Axios.create({
     baseURL: process.env['STRAPI_URL'] + '/api',
     headers: {
@@ -192,33 +203,38 @@ async function upload(data: Page[]) {
     httpAgent: new Agent({ family: 4 })
   })
 
-  const res = await axios({
+  const spinnerStoriesCount = ora('Getting stories count').start();
+
+  const resStories = await axios({
     url: '/stories',
     method: 'get',
   }) as { data: { meta: { pagination: { total: number }}}}
-  const count = res['data']['meta']['pagination']['total']
-  console.log('got count');
-
+  const countStories = resStories['data']['meta']['pagination']['total']
+  
+  spinnerStoriesCount.succeed('Got stories count');
+  const spinnerUploadPages = ora(`Uploading ${data.length} pages`).start();
   const treated: number[] = [];
 
   for (const page of data) {
+    spinnerUploadPages.text = `Uploading page ${treated.length + 1}/${data.length}`;
     const res = await axios({
       url: '/pages',
       method: 'post',
       data: {
         data: {
-          number: page.number,
+          id: page.number + (countStories * 32),
+          number: page.number + (countStories * 32),
           text: page.story,
           options: [
             {
               text: page.option1.desc,
               positive: page.option1.positive,
-              redirect: page.option1.redirects
+              redirect: page.option1.redirects + (countStories * 32)
             },
             {
               text: page.option2.desc,
               positive: page.option2.positive,
-              redirect: page.option2.redirects
+              redirect: page.option2.redirects + (countStories * 32)
             }
           ]
         }
@@ -227,16 +243,21 @@ async function upload(data: Page[]) {
     treated.push(res.data.data.id);
   }
 
+  spinnerUploadPages.succeed(`Uploaded ${treated.length} pages`);
+  const spinnerUploadStory = ora('Uploading story').start();
+
   await axios({
     url: '/stories',
     method: 'post',
     data: {
       data: {
-        number: count + 1,
+        number: countStories + 1,
         pages: treated
       }
     }
   })
+
+  spinnerUploadStory.succeed('Uploaded story');
 }
 
 function texts(pages: Page[]): string {
@@ -260,7 +281,7 @@ function stories(pages: Page[]): string {
 }
 
 async function translate(pages: Page[]): Promise<Page[]> {
-  console.log('contacting DeepL API to translate');
+  const spinner = ora('Translating with DeepL').start();
 
   const axios = Axios.create({
     baseURL: 'https://api-free.deepl.com/v2/translate',
@@ -294,6 +315,8 @@ async function translate(pages: Page[]): Promise<Page[]> {
     page.option2.desc = option2desc;
     final.push(page);
   }
+
+  spinner.succeed('Translated');
 
   return final;
 }
