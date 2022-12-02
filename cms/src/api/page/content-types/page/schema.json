@@ -32,6 +32,13 @@
       "repeatable": true,
       "component": "main.option",
       "required": true
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
