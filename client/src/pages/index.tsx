@@ -48,8 +48,7 @@ const HomePage: NextPage = () => {
 							<Link href="/1">
 								<Circle size='120px' bg='#ffb0af' color='white' style={{"cursor": "pointer"}}>
 									<Flex direction={"column"}>
-										<Text marginLeft={"45%"} color='blue' textDecoration={'underline'} fontSize={"25px"} w="200px" fontWeight={500}>{"Suis-je prêt"}</Text>
-										<Text marginLeft={"45%"} color='blue' textDecoration={'underline'} fontSize={"25px"} w="200px" fontWeight={500}>{"à l'éviter ?"}</Text>
+										<Text marginLeft={"35%"} color='black' fontSize={"25px"} w="200px" fontWeight={500}>{"Jouer au quizz"}</Text>
 									</Flex>
 								</Circle>
 							</Link>
