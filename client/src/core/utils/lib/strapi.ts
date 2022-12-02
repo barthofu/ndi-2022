@@ -30,6 +30,14 @@ class Strapi {
         return Array.isArray(data) ? data[0] || null : data
     }
 
+    async findById<K extends keyof Strapi.Correspondance>(url: K, id: any, params?: any, options?: AxiosRequestConfig): Promise<Strapi.Correspondance[K]> {
+
+        const res = await this.axios.get(this.sanitizeUrl(url) + `/${id}`, { params, ...options })
+        const data = formatStrapiResponse(res.data)
+
+        return Array.isArray(data) ? data[0] || null : data
+    }
+
     async create<K extends keyof Strapi.Correspondance>(url: K, data: any): Promise<Strapi.Correspondance[K]> {
 
         const res = await this.axios.post(this.sanitizeUrl(url), { data }, {

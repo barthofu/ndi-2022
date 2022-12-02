@@ -3,11 +3,14 @@ import type { NextPage, GetServerSideProps } from 'next'
 import { Box } from '@chakra-ui/react'
 import { DefaultLayout } from '@components/layouts'
 import { trpc } from '@utils/lib'
+import { useRouter } from 'next/router'
 
 const PagePage: NextPage = () => {
 
-	const { data } = trpc.story.getStory.useQuery({
-		id: 1
+	const router = useRouter()
+
+	const { data, error } = trpc.story.getStory.useQuery({
+		pageId: parseInt(router.query.pageId as string),
 	})
 
 	return (<>
@@ -16,9 +19,9 @@ const PagePage: NextPage = () => {
 			title='Page'
 		>
 
-			<Box>
-				Hello world from [storyId]/[pageId]
-			</Box>
+			{error && <Box>{error.message}</Box>}
+			{!data && !error && <Box>Loading...</Box>}
+			{data && <Box>{data.text}</Box>}
 
 		</DefaultLayout>		
 	

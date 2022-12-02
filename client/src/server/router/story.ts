@@ -7,15 +7,24 @@ export const storyRouter = router({
 
     getStory: publicProcedure
         .input(z.object({
-            id: z.number()
+            pageId: z.number()
         }))
         .query(async({ input }) => {
 
-            const story = await strapi.findOne('stories', {
-                id: { $eq: input.id }
-            })
+            let page: Strapi.Page | null = null
 
-            console.log('story', story)
+            try {
+
+                page = await strapi.findById(`pages`, input.pageId)
+                if (!page) throw Error()
+            } catch (e) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: 'Page not found'
+                })
+            }
+
+            return page
         })
 
 })
