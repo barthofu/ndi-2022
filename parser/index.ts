@@ -1,10 +1,13 @@
 import toml from 'toml';
 import { readFileSync, writeFileSync } from 'fs';
 import { config } from 'dotenv';
-import axios from 'axios';
+import Axios from 'axios';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import { resolve } from 'path';
+import { Agent } from 'http';
+import { stringify } from 'querystring';
+import { traceDeprecation } from 'process';
 
 config(); // import environment variables
 
@@ -141,12 +144,58 @@ function parse (uri: string): Page[] {
 }
 
 async function upload(data: Page[]) {
-  axios({
-    url: process.env.STRAPI_URL,
+  console.log('started to upload');
+
+  const axios = Axios.create({
+    baseURL: process.env['STRAPI_URL'] + '/api',
+    headers: {
+      Authorization: `Bearer ${process.env['STRAPI_ADMIN_JWT']}`
+    },
+    httpAgent: new Agent({ family: 4 })
+  })
+
+  const res = await axios({
+    url: '/stories',
+    method: 'get',
+  }) as { data: { meta: { pagination: { total: number }}}}
+  const count = res['data']['meta']['pagination']['total']
+  console.log('got count');
+
+  const treated: number[] = [];
+
+  for (const page of data) {
+    const res = await axios({
+      url: '/pages',
+      method: 'post',
+      data: {
+        data: {
+          number: page.number,
+          text: page.story,
+          options: [
+            {
+              text: page.option1.desc,
+              positive: page.option1.positive,
+              redirect: page.option1.redirects
+            },
+            {
+              text: page.option2.desc,
+              positive: page.option2.positive,
+              redirect: page.option2.redirects
+            }
+          ]
+        }
+      }
+    })
+    treated.push(res.data.data.id);
+  }
+
+  await axios({
+    url: '/stories',
     method: 'post',
     data: {
       data: {
-        
+        number: count + 1,
+        pages: treated
       }
     }
   })
