@@ -1,6 +1,14 @@
-# GPT-3 parser
+# Nuit de l'Info 2022 - Codelab
 
-This is a parser for GPT-3's output. It takes the output of GPT-3, parse it and send it tothe Strapi API.
+This project uses:
+
+- [Next.js](https://nextjs.org/)
+- [Strapi](https://strapi.io/)
+- [TRPC](https://trpc.io/)
+- [DALL-E](https://openai.com/blog/dall-e/)
+- [GPT-3](https://openai.com/blog/gpt-3-apps/)
+- [Chakra UI](https://chakra-ui.com/)
+- [ReCharts](https://recharts.org/en-US/)
 
 ## CMS (Strapi)
 
@@ -13,6 +21,8 @@ Then, the images were uploaded manually on Strapi.
 Work was done to ensure the images correspond to the text prompt.
 
 ## Parser / Generator
+
+This is a parser for GPT-3's output. It takes the output of GPT-3, parse it and send it tothe Strapi API.
 
 ### Format of the output
 
@@ -57,5 +67,5 @@ DEEPL_KEY = *...*
 
 The following command can be used:
 
-* `[generator] stories`: to get all the stories from your entry file
-* `[generator] texts`: to get all the texts and options from your entry file
+- `[generator] stories`: to get all the stories from your entry file
+- `[generator] texts`: to get all the texts and options from your entry file
