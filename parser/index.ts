@@ -1,26 +1,15 @@
-import toml from 'toml';
-import { readFileSync, writeFileSync } from 'fs';
+import { writeFileSync } from 'fs';
 import { config } from 'dotenv';
 import Axios from 'axios';
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import { resolve } from 'path';
 import { Agent } from 'http';
-import { stringify } from 'querystring';
-import { traceDeprecation } from 'process';
+import { Agent as SAgent } from 'https';
 
 config(); // import environment variables
 
 yargs(hideBin(process.argv))
-  .option(
-    'outputFile',
-    {
-      alias: 'o',
-      type: 'string',
-      description: 'The output file to save the texts',
-      default: 'output.txt'
-    }
-  )
   .command(
     'upload <file>',
     'parse and upload a file',
@@ -44,7 +33,15 @@ yargs(hideBin(process.argv))
       yargs.positional('file', {
         type: 'string',
         describe: 'the file to parse',
-      });
+      }).option(
+        'outputFile',
+        {
+          alias: 'o',
+          type: 'string',
+          description: 'The output file to save the texts',
+          default: 'output.txt'
+        }
+      )
     },
     (argv) => {
       if (argv.file != undefined) {
@@ -68,7 +65,15 @@ yargs(hideBin(process.argv))
       yargs.positional('file', {
         type: 'string',
         describe: 'the file to parse',
-      });
+      }).option(
+        'outputFile',
+        {
+          alias: 'o',
+          type: 'string',
+          description: 'The output file to save the texts',
+          default: 'output.txt'
+        }
+      )
     },
     (argv) => {
       if (argv.file != undefined) {
@@ -77,6 +82,39 @@ yargs(hideBin(process.argv))
           const file = resolve(argv.outputFile as string);
           writeFileSync(file, text);
           console.log(`Stories saved to ${file}`);
+        } else {
+          console.log(stories(parse(argv.file as string)));
+        }
+      } else {
+        throw new Error('No file specified.');
+      }
+    }
+  )
+  .command(
+    'translate <file>',
+    'parse file and translate content',
+    (yargs) => {
+      yargs.positional('file', {
+        type: 'string',
+        describe: 'the file to parse',
+      }).option(
+        'outputFile',
+        {
+          alias: 'o',
+          type: 'string',
+          description: 'The output file to save the texts',
+          default: 'translated.json'
+        }
+      )
+    },
+    (argv) => {
+      if (argv.file != undefined) {
+        if (argv.outputFile != undefined) {
+          translate(parse(argv.file as string)).then((translated) => {
+            const file = resolve(argv.outputFile as string);
+            writeFileSync(file, JSON.stringify(translated, null, 2));
+            console.log(`Translation saved to ${file}`);
+          })
         } else {
           console.log(stories(parse(argv.file as string)));
         }
@@ -219,4 +257,43 @@ function stories(pages: Page[]): string {
   }
 
   return texts;
+}
+
+async function translate(pages: Page[]): Promise<Page[]> {
+  console.log('contacting DeepL API to translate');
+
+  const axios = Axios.create({
+    baseURL: 'https://api-free.deepl.com/v2/translate',
+    headers: {
+      Authorization: `DeepL-Auth-Key ${process.env['DEEPL_KEY']}`,
+      Accept: 'application/json',
+      'accept-encoding': '*'
+    },
+    httpAgent: new SAgent({ family: 4 })
+  })
+
+  let final: Page[] = [];
+
+  async function trans(text: string) {
+    const res = await axios({
+      method: 'post',
+      params: {
+        text: text,
+        target_lang: 'FR'
+      }
+    })
+    return res.data.translations[0].text;
+  }
+
+  for (let page of pages) {
+    const story = await trans(page.story);
+    const option1desc = await trans(page.option1.desc)
+    const option2desc = await trans(page.option2.desc)
+    page.story = story;
+    page.option1.desc = option1desc;
+    page.option2.desc = option2desc;
+    final.push(page);
+  }
+
+  return final;
 }
