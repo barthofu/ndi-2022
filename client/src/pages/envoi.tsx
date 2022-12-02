@@ -1,11 +1,13 @@
 import { trpc } from '@lib/trpc'
 import type { NextPage } from 'next'
 import { useFormik } from "formik";
+import dynamic from 'next/dynamic'
 
 import { Center, Text, Flex, Box, FormLabel, Select, Spinner } from '@chakra-ui/react'
 import { DefaultLayout } from '@components/layouts'
 import { useMemo } from 'react'
 import Router from 'next/router'
+import { useStorage } from '../core/hooks';
 
 const SendDataPage: NextPage = () => {
 
@@ -15,14 +17,19 @@ const SendDataPage: NextPage = () => {
 
   const statMutation = trpc.stat.createStat.useMutation();
 
+  const { getItem } = useStorage();
+  const score = useMemo(() => getItem("score"), [getItem]);
+
   const formik = useFormik<{genre: Strapi.Stat["genre"] | undefined, age: string | undefined}>({
     initialValues: {genre: undefined, age: undefined},
     onSubmit: async (values) => {
       if(values.genre !== undefined && values.age !== undefined) {
-        await statMutation.mutateAsync({genre: values.genre, age: parseInt(values.age), score: 18}).then(() => Router.push('/statistiques'))
+        await statMutation.mutateAsync({genre: values.genre, age: parseInt(values.age), score: parseInt(score)}).then(() => Router.push('/statistiques'))
       }
     },
   })
+
+  const MessageScore = dynamic(() => Promise.resolve(() => <Text fontSize={15} fontWeight="600" paddingTop={"30px"}>Vous êtes informé à {score}%.</Text>), {ssr: false})
 
 	return (<>
 		<DefaultLayout
@@ -45,7 +52,7 @@ const SendDataPage: NextPage = () => {
 								<img src="/assets/logo.png" alt="logo" />
 							</picture>
 						</Box>
-						<Text fontSize={15} fontWeight="600" paddingTop={"30px"}>Vous êtes informé à 50%.</Text>
+            <MessageScore/>
 						<Text fontSize={15} fontWeight="600" paddingTop={"10px"}>Envoyez vos données pour l'étude :</Text>
 				</Box>
         <Center paddingTop={"70px"}>
