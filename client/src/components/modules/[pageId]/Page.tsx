@@ -1,6 +1,7 @@
-import { Button, Container, Flex, Progress, Text, useToast } from '@chakra-ui/react'
+import { Button, Container, Flex, Image, Progress, Text, useToast } from '@chakra-ui/react'
 import { generalConfig } from '@core/configs'
 import { useStorage } from '@core/hooks'
+import { getStrapiImageUrl } from '@core/utils/functions'
 import Link from 'next/link'
 import React from 'react'
 
@@ -17,9 +18,17 @@ export const Page: React.FC<PageProps> = ({ page }) => {
 
         <Progress hasStripe value={parseInt(getItem('score'))} />
 
-        <Flex h='95vh' w='100vw' alignItems='center' justifyContent='space-around' flexDir='column'>
+        <Flex mt='1em' h='95vh' w='100vw' alignItems='center' justifyContent='space-around' flexDir='column'>
 
-            <Container maxW='container.lg' p='1em' bgColor='#fafafa' boxShadow='0 0 10px 5px rgba(0,0,0, 0.06)'>
+            <Image 
+                src={process.env['NEXT_PUBLIC_STRAPI_API_URL'] + page.image.url}
+                alt='image générée via intelligence artificielle'
+                width='300px'
+                borderRadius='10px'
+                boxShadow='0 0 10px 0 rgba(0,0,0,0.3)'
+            />
+
+            <Container maxW='container.lg' p='1em' bgColor='#fafafa' boxShadow='0 0 10px 5px rgba(0,0,0, 0.06)' borderRadius='10px'>
 
                 <Text size='lg' mb='2em' textAlign='center'>{page.text}</Text>
 
